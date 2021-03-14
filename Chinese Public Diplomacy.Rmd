@@ -1,0 +1,41 @@
+---
+title: "Homework 2"
+author: "Walid Medani"
+date: "2/27/2021"
+header-includes:
+   - \usepackage{bbm}
+urlcolor: blue
+output: pdf_document
+font-size: 24pt
+---
+```{r, include=FALSE}
+library("ggplot2")
+library(tidyverse)
+library(tinytex)
+```
+
+# Introduction
+
+The following data-set is the pre-merged version taken from AidData, a research lab at William & Mary. It observes China's government-financed development projects abroad between 2000-2014. This data-set includes 3,485 projects that are worth $273.6 billion in total financing and observes these projects over 20 different variables.
+
+
+```{r chinaprojects, message=FALSE}
+chinaprojects<- read_csv("Source_Data.csv")
+```
+
+```{r dimensions}
+dim(chinaprojects)
+colnames(chinaprojects)
+
+```
+
+
+## Sources
+
+[Original publication](https://www.aiddata.org/data/chinas-public-diplomacy-dashboard-dataset-version-1-0)
+
+[Pre-merged data](https://www.aiddata.org/data/geocoded-chinese-global-official-finance-dataset)
+
+ 
+
+
