@@ -76,9 +76,12 @@ prop.table(xtabs(total_commitments ~ transactions_start_year, chinaprojects))*10
 
 Graph:
 ```{r graphsfsfsa, class.source="chunkcolor"}
-ggplot(chinaprojects, aes(transactions_start_year, fill= total_commitments)) + 
-geom_bar() +
-  labs(title="Bar Chart", 
+options(scipen=999)
+chinaprojects %>%
+  ggplot(aes(x = transactions_start_year,
+             y = total_commitments)) + 
+  geom_histogram(stat='identity') +
+  labs(title="Histogram Chart", 
        subtitle="Chinese Abroad Project Spending by Year", 
        caption="Source: AidData by William & Mary")
 ```
