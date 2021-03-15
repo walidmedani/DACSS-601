@@ -4,14 +4,14 @@ author: "Walid Medani"
 date: "3/13/2021"
 output:
   tufte::tufte_html: default
-  tufte::tufte_handout:
-    citation_package: natbib
-    latex_engine: xelatex
+  html_document:
+    df_print: paged
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
-  html_document:
-    df_print: paged
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
 urlcolor: blue
 fontsize: 18pt
 monofont: Times New Roman
@@ -64,19 +64,22 @@ Frequency of projects by year:
 ```{r frequency of projects, class.source="chunkcolor"}
 chinaprojects%>%
   count(transactions_start_year)%>%
-kbl()%>%
-kable_classic(full_width = F)
+  kbl()%>%
+  kable_classic(full_width = F)
 ```
 Percentage of spending by year
 ```{r percentages, class.source="chunkcolor"}
 prop.table(xtabs(total_commitments ~ transactions_start_year, chinaprojects))*100
 ```
 
-Graph:
-```{r graphsfsfsa, class.source="chunkcolor"}
-ggplot(chinaprojects, aes(transactions_start_year, fill= total_commitments)) + 
-geom_bar() +
-  labs(title="Bar Chart", 
+Graph showing total spending by year:
+```{r graph, echo=TRUE, warning=FALSE, class.source="chunkcolor"}
+options(scipen=999)
+chinaprojects %>%
+  ggplot(aes(x = transactions_start_year,
+             y = total_commitments)) + 
+  geom_histogram(stat='identity') +
+  labs(title="Histogram Chart", 
        subtitle="Chinese Abroad Project Spending by Year", 
        caption="Source: AidData by William & Mary")
 ```
