@@ -3,15 +3,15 @@ title: "Homework_3"
 author: "Walid Medani"
 date: "3/13/2021"
 output:
-  html_document:
-    df_print: paged
+  tufte::tufte_html: default
   tufte::tufte_handout:
     citation_package: natbib
     latex_engine: xelatex
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
-  tufte::tufte_html: default
+  html_document:
+    df_print: paged
 urlcolor: blue
 fontsize: 18pt
 monofont: Times New Roman
@@ -62,7 +62,8 @@ kable_classic(full_width = F)
 ```
 Frequency of projects by year:
 ```{r frequency of projects, class.source="chunkcolor"}
-table(chinaprojects$transactions_start_year)%>%
+chinaprojects%>%
+  count(transactions_start_year)%>%
 kbl()%>%
 kable_classic(full_width = F)
 ```
