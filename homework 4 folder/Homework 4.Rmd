@@ -41,6 +41,7 @@ library(cartography)
 library(sf)
 library(geojsonio)
 library(treemap)
+library(knitr)
 ```
 
 ```{r read file, echo=TRUE, message=FALSE, warning=FALSE, class.source="chunkcolor"}
@@ -88,18 +89,21 @@ africa <- st_read("africa.geo.json") %>%
 
 map_and_data <- inner_join(africa, countrytotal, by="recipients_iso3")
   
-ggplot(map_and_data) +
+africamap <- ggplot(map_and_data) +
   geom_sf(aes(fill=AmountReceived)) +
   scale_fill_viridis_c(name= 'Financing Received (USD)',
                        guide=guide_legend(
                        legend.position = 'right',
                         label.hjust = 1,
-                        keywidth = 1,
-                        keyheight = 2
+                        keywidth = 1.5,
+                        keyheight = 1.5
                        )) +
   labs(title = "African Recipients of Chinese Financing",
        subtitle = "2000 - 2014") +
-    theme(title = element_text(face = 'bold'))
+    theme(title = element_text(face = 'bold'))+
+  ggdark::dark_theme_void()+
+ggsave("africamap.png")
+africamap
 ```
 
 # Treemap

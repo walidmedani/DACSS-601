@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2021.3.17)  27 MAR 2021 22:48
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2021.3.17)  29 MAR 2021 20:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -916,27 +916,27 @@ Overfull \hbox (97.5pt too wide) in paragraph at lines 215--215
 File: Homework-4_files/figure-latex/cartograph-1.pdf Graphic file (type pdf)
 <use Homework-4_files/figure-latex/cartograph-1.pdf>
 
-Overfull \hbox (12.01646pt too wide) in paragraph at lines 236--237
+Overfull \hbox (12.01646pt too wide) in paragraph at lines 239--240
 [][]  
  []
 
 
 Class tufte-handout Warning: Proper spacing of small-caps letters has not been 
 set up.
-This message occurred on input line 239.
+This message occurred on input line 242.
 
 [2]
 File: Homework-4_files/figure-latex/treemap-1.pdf Graphic file (type pdf)
 <use Homework-4_files/figure-latex/treemap-1.pdf>
 
-Overfull \hbox (12.01646pt too wide) in paragraph at lines 265--266
+Overfull \hbox (12.01646pt too wide) in paragraph at lines 268--269
 [][]  
  []
 
 
 Class tufte-handout Warning: Proper spacing of small-caps letters has not been 
 set up.
-This message occurred on input line 268.
+This message occurred on input line 271.
 
 [3]
 
@@ -947,7 +947,7 @@ Package bibentry Warning: You have used \nobibliography*
 
 Class tufte-handout Warning: Proper spacing of small-caps letters has not been 
 set up.
-This message occurred on input line 278.
+This message occurred on input line 281.
 
 [4] (./Homework-4.aux)
 Package rerunfilecheck Info: File `Homework-4.out' has not changed.
