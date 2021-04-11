@@ -1,0 +1,97 @@
+---
+title: "Homework 5 Bivariate Relationships"
+author: "Walid Medani"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_handout: 
+    citation_package: natbib
+    latex_engine: xelatex
+link-citations: yes
+always_allow_html: true
+---
+
+```{css}
+.chunkcolor {
+background-color: MistyRose;
+}
+options(scipen = 9999)
+```
+
+```{r setup, include=FALSE}
+library(tufte)
+library(tidyverse)
+library(tinytex)
+library(kableExtra)
+library(ggthemes)
+library(knitr)
+library(ggplot2)
+library(dplyr)
+library(gapminder)
+library(ggdark)
+```
+
+# Introduction
+
+Due to my previous dataset being limited in showcasing bi-variate relationships, I've chosen the gapminder dataset that explores population, life expectancy, and GDP of all countries from 1952 to 2007.
+
+Below are the summary statistics of the dataset:
+
+```{r intro, class.source="chunkcolor"}
+summary(gapminder) %>%
+  kbl() %>%
+  kable_material_dark(c("striped", "hover"))
+  
+```
+
+Countries Cuba and South Africa are randomly selected to observe life expectancy.
+
+```{r fsf, class.source="chunkcolor"}
+gapminder %>% 
+  select(country, lifeExp) %>% 
+  filter(country == "Cuba" |
+         country == "South Africa") %>% 
+  group_by(country) %>% 
+  summarise(avglife = mean(lifeExp)) %>% 
+  kbl() %>% 
+  kable_material_dark(c("striped", "hover"))
+```
+
+Is the difference between Cuba and South Africa's life expectancy due to chance? Since I'm comparing the means of two groups, a t-test can validate the difference in life expectancy and conclude that it isn't due to chance in the sample.
+
+```{r ttest, class.source="chunkcolor"}
+southcuba <- gapminder %>% 
+  select(country, lifeExp) %>% 
+  filter(country == "Cuba" |
+         country == "South Africa")
+
+t.test(data = southcuba, lifeExp ~ country)
+```
+
+# Linear Regression
+
+Is there a correlation between life expectancy and gdp per capital and population as seen in the graph below? To find out, I use a multivariate linear regression model by placing GDP & population as the explanatory variables. With p-values below 0.05, our model concludes that there is in fact a correlation between life expectancy and gdp + population.
+
+```{r graph, message=FALSE, warning=FALSE, class.source="chunkcolor"}
+gapminder %>%
+  filter(gdpPercap < 50000) %>% 
+  ggplot(aes(
+          x =log(gdpPercap), 
+          y=lifeExp,
+          color=continent,
+          size=pop)) +
+  geom_point(alpha=0.2)+
+  geom_smooth(method = lm)+
+  labs(title = "Correlation between GDP per capita & life expectancy",
+       subtitle = "1952 - 2007") +
+  theme_fivethirtyeight()+
+  ggdark::dark_mode()+
+  facet_wrap(~continent)
+```
+
+```{r linear regression, class.source="chunkcolor"}
+summary(lm(lifeExp ~ gdpPercap+pop, gapminder))
+```
