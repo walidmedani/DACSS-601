@@ -1,11 +1,9 @@
 ---
 layout: default
 ---
-<title>
-DACSS 601 Projects
-</title>
 
-#Projects
+
+# Projects
 
 ## [Bi-variate Relationships](./homework-5.html)
 <img src="images/hw5image.png?raw=true"/>
