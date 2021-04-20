@@ -8,5 +8,4 @@ layout: default
 Bi-variate relationships
 
 # [HOMEWORK 4](./Homework-3.html)
-Bi-variate relationships
-
+Visualization
