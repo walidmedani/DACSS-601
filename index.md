@@ -5,7 +5,7 @@ layout: default
 
 
 # [Bi-variate Relationships](./homework-5.html)
-<img src="images/hw5image.png?raw=true"/>
+<img src="img/hw5image.png?raw=true"/>
 
 # [Visualization](./Homework-4.html)
 <img src="images/hw4image.png?raw=true"/>
