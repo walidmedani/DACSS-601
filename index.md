@@ -4,11 +4,11 @@ layout: default
 
 
 
-# [Homework 5](./homework-5.html)
-Bi-variate relationships
+# [Bi-variate Relationships](./homework-5.html)
+<img src="images/hw5image.png?raw=true"/>
 
-# [Homework 4](./Homework-4.html)
-Visualization
+# [Visualization](./Homework-4.html)
+<img src="images/hw4image.png?raw=true"/>
 
-# [Homework 3](./Homework-3.html)
-Uni-variate statistics
+# [Univariate Statistics](./Homework-3.html)
+<img src="images/hw3image.png?raw=true"/>
