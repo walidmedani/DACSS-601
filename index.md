@@ -1,7 +1,9 @@
 ---
 layout: default
 ---
-
+<head>
+Walid Medani - DACSS 601
+</head>
 
 
 # [Bi-variate Relationships](./homework-5.html)
