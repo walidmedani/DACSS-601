@@ -54,7 +54,7 @@ In 2016, ProPublica questioned the validity of the Correctional Offender Managem
 
 # Data & Visualization
 
-To analyze bias within COMPAS, I will be using the data ProPublica collected of 18,610 criminal defendants in Broward County. Broward County was specifically chosen since it utilizes COMPAS to oversee a large population size and benefits from Florida's transparent public record laws. Scores of criminal defendants that were assessed in stages outside of pre-trial were discarded, reducing the total criminal defendants down to 11,957 people.
+To analyze bias within COMPAS, I will be using the [data](https://github.com/propublica/compas-analysis) ProPublica collected of 18,610 criminal defendants in Broward County. Broward County was specifically chosen since it utilizes COMPAS to oversee a large population size and benefits from Florida's transparent public record laws. Scores of criminal defendants that were assessed in stages outside of pre-trial were discarded, reducing the total criminal defendants down to 11,957 people.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 violentraw <- read.csv("./compas-scores-two-years-violent.csv")
@@ -145,8 +145,7 @@ COMPAS's decile scores are rankings of normative groups in ascending order. In [
 
 -   **8 -- 10**: scale score is **high** relative to other offenders in norm group.
 
-We start to visually see bias in the data as shown in the figures below. The trend for Caucasian decile scores decreases as the normative scale score increases, whereas for African-Americans it is much more distributed throughout the rankings. Although scores for Native Americans is high, we will later on find out it's not statistically significant due to a sample size of 11 criminal defendants.
-\linebreak
+We start to visually see bias in the data as shown in the figures below. The trend for Caucasian decile scores decreases as the normative scale score increases, whereas for African-Americans it is much more distributed throughout the rankings. Although scores for Native Americans is high, we will later on find out it's not statistically significant due to a sample size of 11 criminal defendants. \linebreak
 
 ```{r boxplot, echo=FALSE, fig.show="hold", out.width="50%"}
 compasnon %>% 
@@ -282,9 +281,9 @@ logisticv <- glm(data=compasglm_v, score_factor ~ gender_factor + age_factor + r
 summary(logisticv)
 ```
 
-Based on the coefficients above, African American defendants were 47% more likely to receive a medium or high score. African American violent defendants were 65% more likely to receive a medium or high score. However these numbers aren't necessarily perfectly accurate due to the need of further calculating predicted probabilities. 
+Based on the coefficients above, African American defendants were 47% more likely to receive a medium or high score. African American violent defendants were 65% more likely to receive a medium or high score. However these numbers aren't necessarily perfectly accurate due to the need of further calculating predicted probabilities.
 
-\pagebreak 
+\pagebreak
 
 # Reflections
 
