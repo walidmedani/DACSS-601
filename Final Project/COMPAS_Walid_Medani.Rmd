@@ -39,6 +39,8 @@ library(caret)
 library(fairness)
 library(bibtex)
 library(latexpdf)
+library(caret)
+library(yardstick)
 ```
 
 <br> As the overton window in public opinion shifts to more accountability, transparency and oversight in algorithms or black box models. The ethical dilemma of using models as the sole or major factor in deciding incarceration has permeated the discourse surrounding Risk Assessment Instruments (RAI). RAIs are algorithmic tools that assess a defendant's future risk of recidivism and court appearance based on a variety of factors and historical group tendencies. However, crime is an artificial concept and the way it's defined is subjective. The methods to measure it are imperfect and often display racial biases. It discounts and reinforces structural racial disparities in environmental factors, material conditions, education, and population density. In a 2013 study, (@olver2014 found that ethnic minorities had higher risk scores in the U.S. in comparison to Canada and noted that "systemic bias within the justice system may distort recidivism". RAIs' predictive accuracy is also not supported by current evidence (@douglas2017,
@@ -47,8 +49,7 @@ library(latexpdf)
 
 The trade-secrets of these RAIs is currently justified under our current set of intellectual property laws, but it's unethical to justify private profiteering when it impacts incarceration. As algorithms models decide upon the balance of positive and negative impacts, the public requires transparency to understand how persons are being sorted and judged in order to have freedom from bias. The need for transparency is imperative due to the validity of RAIs being examined mostly by the same people who developed the instruments (@desmarais2013.
 
-In 2016, ProPublica questioned the validity of the Correctional Offender Management Profiling for Alternative Sanctions (COMPAS) in predicting recidivism and racial bias. COMPAS is an RAI that is widely used throughout the U.S. in pretrial and sentencing. It analyzes a questionnaire of 137 variables such as age, sex, criminal history and computes a scale for recidivism at the time of booking in jail. COMPAS does not use race in factoring its recidivist scores. To ensure equitable application, ProPublica wanted to determine if these risk scores were in fact accurate and void of racial biases despite it not accounting for race. To examine the collective capacity of auditing algorithms, with only knowledge of introductory statistics and programming in R, I will attempt to replicate ProPublica's findings to journal my experiences and the cognitive labor necessary for algorithmic literacy.
-<br>
+In 2016, ProPublica questioned the validity of the Correctional Offender Management Profiling for Alternative Sanctions (COMPAS) in predicting recidivism and racial bias. COMPAS is an RAI that is widely used throughout the U.S. in pretrial and sentencing. It analyzes a questionnaire of 137 variables such as age, sex, criminal history and computes a scale for recidivism at the time of booking in jail. COMPAS does not use race in factoring its recidivist scores. To ensure equitable application, ProPublica wanted to determine if these risk scores were in fact accurate and void of racial biases despite it not accounting for race. To examine the collective capacity of auditing algorithms, with only knowledge of introductory statistics and programming in R, I will attempt to replicate ProPublica's findings to journal my experiences and the cognitive labor necessary for algorithmic literacy. <br>
 
 # Data & Visualization
 
@@ -68,7 +69,7 @@ scroll_box(width = "100%", height = "auto")
 ```{r echo=FALSE}
 compasnon <- compas_raw %>%
         select(age, age_cat, c_charge_degree, race, score_text, sex, priors_count, days_b_screening_arrest, decile_score, is_recid, two_year_recid, c_jail_in, c_jail_out) %>%
-        mutate(is_med_or_high_risk = as.integer(decile_score>=5)) %>% 
+        mutate(is_med_or_high_risk = as.numeric(decile_score>=5, labels = c(0,1))) %>%
         filter(days_b_screening_arrest <= 30) %>%
         filter(days_b_screening_arrest >= -30) %>%
         filter(is_recid != -1) %>%
@@ -164,6 +165,7 @@ compasviolent %>%
   scale_fill_manual(values = c("#482677FF", "#404788FF", "#FDE725FF", "#238A8DFF", "#5DC863FF", "#73D055FF")) +
   theme(legend.position = "none")
 ```
+
 ```{r decilegraphics, echo=FALSE, fig.show="hold", class.source="chunkcolor", out.width="50%"}
 compasnon %>%
   filter(race == "African-American") %>% 
@@ -200,6 +202,46 @@ compasviolent %>%
   theme_fivethirtyeight()
 ```
 
+Those who receive a decile score of 5 or more are classified as medium to high risk in relation to the normative group. By taking the mean of those who were predicted to recidivate (decile scores 5-10) and the actual recidivism rate, we can find the accuracy of recidivism predictions. We find that COMPAS is 62% accurate in predicting non-violent recidivism and 35% accurate for predicting violent criminal defendants.
+
+```{r accuracy, echo=FALSE}
+nonviolent_accuracy <- mean(compasnon$is_med_or_high_risk | compasnon$two_year_recid)
+violent_accuracy <- mean(compasviolent$is_med_or_high_risk | compasviolent$two_year_recid)
+
+tibble(nonviolent_accuracy, violent_accuracy)*100
+```
+
+Since we have data on those who did recidivate within two years of receiving a decile score. We can run a confusion matrix to evaluate the performance of COMPAS's classification model in predicting recividism.
+
+-   True positives (TP): predicted to recidivate and did recidivate (correct classification)
+
+-   False positives (FP): predicted to recidivate but did NOT recidivate (incorrect classification)
+
+-   True negatives (TN): NOT predicted to recidivate and did NOT recidivate (correct classification)
+
+-   False negatives (FN): NOT predicted to recidivate but did recidivate (incorrect classification)
+
+By using the formula ^FP/TP+FP^ we can find the false positive rate (incorrect classification). African American defendants had a 35% false positive rate in comparison to 28% in Caucasians.
+
+```{r matrix, echo=FALSE, fig.show="hold", out.width="50%"}
+Afcompas <- compasnon %>% 
+  filter(race == "African-American")
+
+ccompas <- compasnon %>% 
+  filter(race == "Caucasian")
+
+confusionMatrix(data = factor(Afcompas$is_med_or_high_risk), reference= factor(Afcompas$two_year_recid), positive = "1") 
+confusionMatrix(data = factor(ccompas$is_med_or_high_risk), reference= factor(ccompas$two_year_recid),
+positive = "1") 
+ctable <- as.table(matrix(c(873, 473, 641 , 1188), nrow = 2, byrow = TRUE))
+fourfoldplot(ctable, color = c("#440154FF", "#FDE725FF"),
+             conf.level = 0, margin = 1, main = "African American Confusion Matrix")
+
+ctable2 <- as.table(matrix(c(999 , 408, 282, 414), nrow = 2, byrow = TRUE))
+fourfoldplot(ctable2, color = c("#440154FF", "#FDE725FF"),
+             conf.level = 0, margin = 1, main = "Caucasian Confusion Matrix")
+```
+
 The distributions of decile scores might visually indicate bias but it does not take into consideration other factors that may be impacting it. Logistic regression is the appropriate regression analysis to conduct when the dependent variable is binary and we want to explain the relationship between one dependent binary variable and one or more independent variables. To test racial bias in decile scores, the logistic regression model will control for race, age, criminal history, future recidivism, charge degree, gender and age.
 
 ```{r glm, echo=FALSE}
@@ -215,11 +257,6 @@ compasglm <- compasnon %>%
 
 logistic<- glm(data=compasglm, is_med_or_high_risk ~ gender_factor + age_factor + race_factor + priors_count + crime_factor + two_year_recid, family="binomial")
 summary(logistic)
-```
-Black defendants were 45% more likely than white defendants to receive a higher score correcting for the seriousness of their crime, previous arrests, and future criminal behavior.
-```{r}
-control <- exp(-1.52554) / (1 + exp(-1.52554))
-exp(0.47721) / (1 - control + (control * exp(0.47721)))
 ```
 
 ```{r glmv, echo=FALSE}
@@ -243,14 +280,7 @@ logisticv <- glm(data=compasglm_v, score_factor ~ gender_factor + age_factor + r
 summary(logisticv)
 ```
 
-Those who receive a decile score of 5 or more are classified as medium to high risk in relation to the normative group. By taking the mean of those who were predicted to recidivate (decile scores 5-10) and the actual recidivism rate, we can find the accuracy of recidivism predictions. We find that COMPAS is 62% accurate in predicting non-violent recidivism and 35% accurate for predicting violent criminal defendants.
-
-```{r accuracy, echo=FALSE}
-nonviolent_accuracy <- mean(compasnon$is_med_or_high_risk | compasnon$two_year_recid)
-violent_accuracy <- mean(compasviolent$is_med_or_high_risk | compasviolent$two_year_recid)
-
-tibble(nonviolent_accuracy, violent_accuracy)*100
-```
+Based on the coefficients above, African American defendants were 47% more likely to receive a medium or high score. African American violent defendants were 65% more likely to receive a medium or high score. However these numbers aren't necessarily perfectly accurate due to the need of further calculating predicted probabilities.
 
 # Reflections
 
