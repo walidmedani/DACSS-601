@@ -5,7 +5,7 @@ layout: default
 
 # Projects
 
-## [Final Project](/final project/homework-5.html)
+## [Final Project](./final project/COMPAS_Walid_Medani.html)
 A Diary Study on Algorithmic Literacy, Analyzing Racial Bias in the Algorithm of COMPAS
 
 ## [Bivariate Relationships](./homework-5.html)
