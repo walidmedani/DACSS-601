@@ -5,6 +5,9 @@ layout: default
 
 # Projects
 
+## [Final Project](./final project/homework-5.html)
+A Diary Study on Algorithmic Literacy, Analyzing Racial Bias in the Algorithm of COMPAS
+
 ## [Bivariate Relationships](./homework-5.html)
 For this assignment, you must select at least two variables of interest from your dataset, provide a basic description of the variables, clean and recode as needed, and present descriptive statistics and any visualizations.
 
