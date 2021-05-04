@@ -48,8 +48,8 @@ library(latexpdf)
 The trade-secrets of these RAIs is currently justified under our current set of intellectual property laws, but it's unethical to justify private profiteering when it impacts incarceration. As algorithms models decide upon the balance of positive and negative impacts, the public requires transparency to understand how persons are being sorted and judged in order to have freedom from bias. The need for transparency is imperative due to the validity of RAIs being examined mostly by the same people who developed the instruments (@desmarais2013.
 
 In 2016, ProPublica questioned the validity of the Correctional Offender Management Profiling for Alternative Sanctions (COMPAS) in predicting recidivism and racial bias. COMPAS is an RAI that is widely used throughout the U.S. in pretrial and sentencing. It analyzes a questionnaire of 137 variables such as age, sex, criminal history and computes a scale for recidivism at the time of booking in jail. COMPAS does not use race in factoring its recidivist scores. To ensure equitable application, ProPublica wanted to determine if these risk scores were in fact accurate and void of racial biases despite it not accounting for race. To examine the collective capacity of auditing algorithms, with only knowledge of introductory statistics and programming in R, I will attempt to replicate ProPublica's findings to journal my experiences and the cognitive labor necessary for algorithmic literacy.
+<br>
 
-<br> 
 # Data & Visualization
 
 To analyze bias within COMPAS, I will be using the data ProPublica collected of 18,610 criminal defendants in Broward County. Broward County was specifically chosen since it utilizes COMPAS to oversee a large population size and benefits from Florida's transparent public record laws. Scores of criminal defendants that were assessed in stages outside of pre-trial were discarded, reducing the total criminal defendants down to 11,957 people.
