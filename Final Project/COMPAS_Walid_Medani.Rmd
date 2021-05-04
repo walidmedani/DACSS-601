@@ -14,13 +14,13 @@ bibliography: "compascitations.bib"
 ```{=html}
 <style>
 p {line-height: 2em;}
-p {font-size: 16px;}
+p {font-size: 1.4em;}
 p {font-family: Times New Roman;}
 
 blockquote {
-padding: 45px;
+padding: 40px;
 font-family: Times New Roman;
-font-size: 16px;
+font-size: 1em;
 border: none !important;
 }
 </style>
