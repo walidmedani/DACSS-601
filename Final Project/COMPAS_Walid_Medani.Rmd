@@ -42,6 +42,7 @@ library(fairness)
 library(bibtex)
 library(latexpdf)
 library(caret)
+library(naniar)
 ```
 
 <br> As the overton window in public opinion shifts to more accountability, transparency and oversight in algorithms or black box models. The ethical dilemma of using models as the sole or major factor in deciding incarceration has permeated the discourse surrounding Risk Assessment Instruments (RAI). RAIs are algorithmic tools that assess a defendant's future risk of recidivism and court appearance based on a variety of factors and historical group tendencies. However, crime is an artificial concept and the way it's defined is subjective. The methods to measure it are imperfect and often display racial biases. It discounts and reinforces structural racial disparities in environmental factors, material conditions, education, and population density. In a 2013 study, (@olver2014 found that ethnic minorities had higher risk scores in the U.S. in comparison to Canada and noted that "systemic bias within the justice system may distort recidivism". RAIs' predictive accuracy is also not supported by current evidence (@douglas2017,
@@ -92,6 +93,11 @@ head(compasnon) %>%
 kbl() %>%
 kable_material(c("striped", "hover")) %>% 
 scroll_box(width = "100%", height = "auto")
+```
+Before and after of cleaning missing values in the dataset:
+```{r missing, echo=FALSE, fig.show="hold", out.width="50%"}
+vis_miss(compas_raw)
+vis_miss(compasnon)
 ```
 
 ### <br>Below is the demographic breakdown of the sample of non-violent and violent criminal defendants processed by COMPAS in Broward County.
