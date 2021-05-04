@@ -5,10 +5,12 @@ date: "<center> 05/04/21 </center>"
 output:
   html_document: default
   pdf_document: default
+indent: TRUE
 mainfont: Times New Roman
 fontsize: 12pt
-indent: yes
 bibliography: "compascitations.bib"
+header-includes:
+    - \usepackage{setspace}\doublespacing
 ---
 
 ```{=html}
@@ -40,7 +42,6 @@ library(fairness)
 library(bibtex)
 library(latexpdf)
 library(caret)
-library(yardstick)
 ```
 
 <br> As the overton window in public opinion shifts to more accountability, transparency and oversight in algorithms or black box models. The ethical dilemma of using models as the sole or major factor in deciding incarceration has permeated the discourse surrounding Risk Assessment Instruments (RAI). RAIs are algorithmic tools that assess a defendant's future risk of recidivism and court appearance based on a variety of factors and historical group tendencies. However, crime is an artificial concept and the way it's defined is subjective. The methods to measure it are imperfect and often display racial biases. It discounts and reinforces structural racial disparities in environmental factors, material conditions, education, and population density. In a 2013 study, (@olver2014 found that ethnic minorities had higher risk scores in the U.S. in comparison to Canada and noted that "systemic bias within the justice system may distort recidivism". RAIs' predictive accuracy is also not supported by current evidence (@douglas2017,
@@ -145,6 +146,7 @@ COMPAS's decile scores are rankings of normative groups in ascending order. In [
 -   **8 -- 10**: scale score is **high** relative to other offenders in norm group.
 
 We start to visually see bias in the data as shown in the figures below. The trend for Caucasian decile scores decreases as the normative scale score increases, whereas for African-Americans it is much more distributed throughout the rankings. Although scores for Native Americans is high, we will later on find out it's not statistically significant due to a sample size of 11 criminal defendants.
+\linebreak
 
 ```{r boxplot, echo=FALSE, fig.show="hold", out.width="50%"}
 compasnon %>% 
@@ -280,7 +282,9 @@ logisticv <- glm(data=compasglm_v, score_factor ~ gender_factor + age_factor + r
 summary(logisticv)
 ```
 
-Based on the coefficients above, African American defendants were 47% more likely to receive a medium or high score. African American violent defendants were 65% more likely to receive a medium or high score. However these numbers aren't necessarily perfectly accurate due to the need of further calculating predicted probabilities.
+Based on the coefficients above, African American defendants were 47% more likely to receive a medium or high score. African American violent defendants were 65% more likely to receive a medium or high score. However these numbers aren't necessarily perfectly accurate due to the need of further calculating predicted probabilities. 
+
+\pagebreak 
 
 # Reflections
 
@@ -299,5 +303,7 @@ ProPublica's analysis of COMPAS found a false positive rate (defendant is predic
 However the assumption underlying this debate is that we blindly accept and rely on digital technology to accomplish ordinary goals. In a study to determine the need of such software, (@dressel recruited 400 non-expert participants from Amazon's Mechanical Turk to predict recidivism with only seven variables in comparison to COMPAS's 137; participants had a prediction accuracy of 63 percent in comparison to the 67 percent of COMPAS. In another study, (@angelino2017 developed an algorithmic model comprising of only a criminal defendant's sex, age, and prior convictions to replicate the same predictive accuracy as COMPAS. The appeal of algorithms and big data may influence a judge's decision but would they still consider a RAI to set bail and sentencing if it performs the same as random surveyors? The problem is this reliance on algorithmic systems as oracles and without proper interpretation, the decision-making of algorithmic systems could devolve to perceive meaningful connections between seemingly unrelated things. And when these patterns are made, it could erode the dignity and autonomy of people and impose on their freedom from bias.
 
 What ProPublica's analysis points to is most concerning possible sources of bias, which can come from the historical outcomes that an RAI learns to predict. Due to systemic racism engulfing the criminal justice system, models will only learn to replicate the outcomes of unjust practices. African Americans have historically been convicted at higher rates and racial disparity is exhibited in many forms from wage gaps, over-policing, education, sentencing, parole, and to bail. Datasets do not address the underlying social and structural hierarchies at play and are only modeled around the status quo. In order to circumvent racism in technology, (@benjamin2019 profoundly pinpoints the concept of how "blackness can be both marginal and focal to tech development". That if we compare and contrast ostensibly different technologies we can better sort through what is consequential to racial inequality.
+
+\pagebreak
 
 # Bibliography
