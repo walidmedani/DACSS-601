@@ -5,6 +5,11 @@ layout: default
 
 # Projects
 
+## [Final Project](./Final Project/COMPAS_Walid_Medani.html)
+A Diary Study on Algorithmic Literacy, Analyzing Racial Bias in the Algorithm of COMPAS
+
+<img src="images/compas.png?raw=true"/>
+
 ## [Bivariate Relationships](./homework-5.html)
 For this assignment, you must select at least two variables of interest from your dataset, provide a basic description of the variables, clean and recode as needed, and present descriptive statistics and any visualizations.
 
