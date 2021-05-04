@@ -1,5 +1,5 @@
 ---
-title: <br><center>A Diary Study on Algorithmic Literacy, Analyzing Racial Bias in the Algorithm of COMPAS</center>
+title: <br><center>A Diary Study on Algorithmic Auditing, Analyzing Racial Bias in the Algorithm of COMPAS</center>
 author: "<center> Walid Medani </center>"
 date: "<center> 05/04/21 </center>"
 output:
